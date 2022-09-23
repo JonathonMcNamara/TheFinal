@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using TheFinal.Models;
@@ -18,7 +19,15 @@ namespace TheFinal.Controllers
 
         [HttpGet]
         public ActionResult<List<Keep>> GetAllKeeps(){
-            
+            try
+            {
+                List<Keep> keeps = _keepsService.GetAllKeeps();
+                return Ok(keeps);
+            }
+            catch (Exception e)
+            {
+            return BadRequest(e.Message);
+            }
         }
     }
 }

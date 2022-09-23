@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using TheFinal.Models;
 using TheFinal.Repositories;
 
 namespace TheFinal.Services
@@ -9,6 +11,11 @@ namespace TheFinal.Services
         public KeepsService(KeepsRepository keepsRepo)
         {
             _keepsRepo = keepsRepo;
+        }
+
+        internal List<Keep> GetAllKeeps()
+        {
+            return _keepsRepo.GetAll();
         }
     }
 }
