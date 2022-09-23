@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -29,6 +30,11 @@ namespace TheFinal.Repositories
                 return keep;
             }).ToList();
             return keeps;
+        }
+
+        internal Keep Create(Keep newKeep)
+        {
+            throw new NotImplementedException();
         }
     }
 }
