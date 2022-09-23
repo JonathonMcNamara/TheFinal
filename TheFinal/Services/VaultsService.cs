@@ -38,5 +38,15 @@ namespace TheFinal.Services
             original.IsPrivate = updateVault.IsPrivate || original.IsPrivate;
             return _vaultsRepo.EditVault(original);
         }
+
+        internal string DeleteVault(int id, string userId)
+        {
+            Vault vault = GetVaultById(id);
+            if(vault.CreatorId != userId){
+                throw new Exception("You are not authorized to delete this vault");
+            }
+            _vaultsRepo.DeleteVault(id);
+            return $"Vault {vault.Name} has been deleted";
+        }
     }
 }

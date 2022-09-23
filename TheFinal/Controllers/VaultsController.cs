@@ -64,5 +64,20 @@ namespace TheFinal.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        [HttpDelete("{id}")]
+        [Authorize]
+        public async Task<ActionResult<Vault>> DeleteVault(int id){
+            try
+            {
+                Account user = await HttpContext.GetUserInfoAsync<Account>();
+                string message = _vaultsService.DeleteVault(id, user.Id);
+                return Ok(message);
+            }
+                catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

@@ -49,13 +49,21 @@ namespace TheFinal.Repositories
         {
             string sql = @"
             UPDATE vaults SET
-            name: @name,
-            description: @description,
-            isPrivate: @isPrivate
+            name = @name,
+            description = @description,
+            isPrivate = @isPrivate
             WHERE id = @id;
             ";
             _db.Execute(sql, updateData);
             return updateData;
+        }
+
+        internal void DeleteVault(int id)
+        {
+            string sql = @"
+            DELETE FROM vaults WHERE id = @id
+            ";
+            _db.Execute(sql, new{id});
         }
     }
 }
