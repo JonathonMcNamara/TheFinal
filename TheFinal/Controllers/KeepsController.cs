@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using TheFinal.Models;
 using TheFinal.Services;
 
 namespace TheFinal.Controllers
@@ -12,6 +14,11 @@ namespace TheFinal.Controllers
         public KeepsController(KeepsService keepsService)
         {
             _keepsService = keepsService;
+        }
+
+        [HttpGet]
+        public ActionResult<List<Keep>> GetAllKeeps(){
+            
         }
     }
 }
