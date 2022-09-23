@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -34,7 +33,16 @@ namespace TheFinal.Repositories
 
         internal Keep Create(Keep newKeep)
         {
-            throw new NotImplementedException();
+            string sql = @"
+            INSERT INTO keeps
+            (name, description, img, creatorId)
+            VALUES
+            (@name, @description, @img, @creatorId);
+            SELECT LAST_INSERT_ID();
+            ";
+            int id = _db.ExecuteScalar<int>(sql, newKeep);
+            newKeep.Id = id;
+            return newKeep;
         }
     }
 }

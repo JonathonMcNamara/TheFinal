@@ -17,5 +17,11 @@ namespace TheFinal.Services
         {
             return _keepsRepo.GetAll();
         }
+
+        internal Keep CreateKeep(Keep newKeep)
+        {
+        Keep keep =  _keepsRepo.Create(newKeep);
+        return keep;
+        }
     }
 }

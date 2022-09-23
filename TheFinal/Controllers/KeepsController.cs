@@ -1,5 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using CodeWorks.Auth0Provider;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TheFinal.Models;
 using TheFinal.Services;
@@ -29,5 +32,23 @@ namespace TheFinal.Controllers
             return BadRequest(e.Message);
             }
         }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<ActionResult<Keep>> CreateKeep([FromBody] Keep newKeep){
+            try
+            {
+            Account user = await HttpContext.GetUserInfoAsync<Account>();
+            newKeep.CreatorId = user.Id;
+            Keep keep = _keepsService.CreateKeep(newKeep);
+            keep.Creator = user;
+            return Ok(keep);
+            }
+            catch (Exception e)
+            {
+            return BadRequest(e.Message);
+            }
+        }
+
     }
 }
