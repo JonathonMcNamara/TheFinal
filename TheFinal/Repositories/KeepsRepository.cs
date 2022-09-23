@@ -24,11 +24,30 @@ namespace TheFinal.Repositories
             FROM keeps k
             JOIN accounts a ON a.id = k.creatorId;
             ";
-            List<Keep> keeps = _db.Query<Keep, Profile, Keep>(sql, (keep, profile)=>{
+            List<Keep> keeps = _db.Query<Keep, Profile, Keep>(sql, (keep, profile)=>
+            {
                 keep.Creator = profile;
                 return keep;
             }).ToList();
             return keeps;
+        }
+
+        internal Keep GetKeepById(int id)
+        {
+            string sql = @"
+            SELECT
+            k.*,
+            a.*
+            FROM keeps k
+            JOIN accounts a ON a.id = k.creatorId
+            WHERE k.id = @id;
+            ";
+            Keep keep = _db.Query<Keep, Profile, Keep>(sql, (keep, profile)=>
+            {
+                keep.Creator = profile;
+                return keep;
+            }, new {id}).FirstOrDefault();
+            return keep;
         }
 
         internal Keep Create(Keep newKeep)

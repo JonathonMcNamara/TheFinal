@@ -50,5 +50,18 @@ namespace TheFinal.Controllers
             }
         }
 
+        [HttpGet("{id}")]
+        public ActionResult<Keep> GetKeepById(int id){
+            try
+            {
+                Keep keep = _keepsService.GetKeepById(id);
+                return keep;
+            }
+                catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
     }
 }
