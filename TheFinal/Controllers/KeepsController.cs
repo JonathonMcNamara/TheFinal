@@ -63,5 +63,37 @@ namespace TheFinal.Controllers
             }
         }
 
+        [HttpPut("{id}")]
+        [Authorize]
+        public async Task<ActionResult<Keep>> UpdateKeep(int id, [FromBody] Keep updateKeep){
+            try
+            {
+                Account user = await HttpContext.GetUserInfoAsync<Account>();
+                updateKeep.Id = id;
+                Keep keep = _keepsService.UpdateKeep(updateKeep, user.Id);
+                return Ok(keep);
+            }
+                catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        [Authorize]
+
+        public async Task<ActionResult<Keep>> DeleteKeep(int id){
+            try
+            {
+                Account user = await HttpContext.GetUserInfoAsync<Account>();
+                string message = _keepsService.DeleteKeep(id, user.Id);
+                return Ok(message);
+            }
+                catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
     }
 }

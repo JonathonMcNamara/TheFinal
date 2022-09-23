@@ -50,6 +50,18 @@ namespace TheFinal.Repositories
             return keep;
         }
 
+        internal Keep UpdateKeep(Keep updateData)
+        {
+            string sql = @"
+            UPDATE keeps SET
+            name = @name,
+            description = @description,
+            img = @img            
+            ";
+            _db.Execute(sql, updateData);
+            return updateData;
+        }
+
         internal Keep Create(Keep newKeep)
         {
             string sql = @"
@@ -62,6 +74,14 @@ namespace TheFinal.Repositories
             int id = _db.ExecuteScalar<int>(sql, newKeep);
             newKeep.Id = id;
             return newKeep;
+        }
+
+        internal void DeleteKeep(int id)
+        {
+            string sql = @"
+            DELETE FROM keeps WHERE id = @id;
+            ";
+            _db.Execute(sql, new {id});
         }
     }
 }

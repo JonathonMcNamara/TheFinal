@@ -34,5 +34,26 @@ namespace TheFinal.Services
         return keep;
         }
 
+        internal Keep UpdateKeep(Keep updateKeep, string userId)
+        {
+            Keep original = GetKeepById(updateKeep.Id);
+            if (original.CreatorId != userId){
+                throw new Exception("You are forbidden from updating this keep");
+            }
+            original.Name = updateKeep.Name ?? original.Name;
+            original.Description = updateKeep.Description ?? original.Description;
+            original.Img = updateKeep.Img ?? original.Img;
+            return _keepsRepo.UpdateKeep(original);
+        }
+
+        internal string DeleteKeep(int id, string userId)
+        {
+            Keep keep = GetKeepById(id);
+            if(keep.CreatorId != userId){
+                throw new Exception("You are not allowed to delete this keep");
+            }
+            _keepsRepo.DeleteKeep(id);
+            return $"The Keep {keep.Name} has been deleted";
+        }
     }
 }
