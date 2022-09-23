@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS keeps(
   kept INT NOT NULL DEFAULT 0,
 
   Foreign Key (creatorId) REFERENCES accounts(id)
-)default charset utf8;
+) default charset utf8;
 -- 
 
 -- STUB USE THIS TO CREATE KEEPS
@@ -36,4 +36,33 @@ k.*,
 a.*
 FROM keeps k
 JOIN accounts a ON a.id = k.creatorId;
+-- 
+
+
+-- STUB CREATE VAULTS TABLE
+
+CREATE TABLE IF NOT EXISTS vaults(
+  id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+  creatorId VARCHAR(255) NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  description text NOT NULL,
+  isPrivate bool NOT NULL DEFAULT false,
+
+  FOREIGN KEY (creatorId) REFERENCES accounts(id)
+) default charset utf8;
+-- 
+
+-- STUB CREATE VAULTS
+INSERT INTO vaults
+(name, description, isPrivate, creatorId)
+VALUES
+("Anime Favorites", "Characters from my favorite anime", true, "62f692c85d4c5d880f69ac3a");
+-- 
+
+-- STUB SELECT VAULTS WITH THEIR CREATOR
+SELECT
+v.*,
+a.* 
+FROM vaults v
+JOIN accounts a ON a.id = v.creatorId;
 -- 
