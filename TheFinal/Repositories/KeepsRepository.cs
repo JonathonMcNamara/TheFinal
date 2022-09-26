@@ -77,6 +77,16 @@ namespace TheFinal.Repositories
             return newKeep;
         }
 
+        internal VaultedKeep GetVaultKeep(int id)
+        {
+            string sql = @"
+            SELECT * FROM keeps
+            WHERE id = @id;
+            ";
+            VaultedKeep keep = _db.Query<VaultedKeep>(sql, new {id}).FirstOrDefault();
+            return keep;
+        }
+
         internal void DeleteKeep(int id)
         {
             string sql = @"

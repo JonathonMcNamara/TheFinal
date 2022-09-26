@@ -14,6 +14,6 @@ namespace TheFinal.Models
 
     public class VaultedKeep : Keep 
     {
-        public int VaultId { get; set; }
+        public int VaultKeepId { get; set; }
     }
 }

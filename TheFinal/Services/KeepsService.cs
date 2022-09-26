@@ -46,6 +46,7 @@ namespace TheFinal.Services
             return _keepsRepo.UpdateKeep(original);
         }
 
+
         internal string DeleteKeep(int id, string userId)
         {
             Keep keep = GetKeepById(id);
@@ -54,6 +55,14 @@ namespace TheFinal.Services
             }
             _keepsRepo.DeleteKeep(id);
             return $"The Keep {keep.Name} has been deleted";
+        }
+        internal VaultedKeep GetVaultedKeepById(int keepId)
+        {
+            VaultedKeep keep = _keepsRepo.GetVaultKeep(keepId);
+            if(keep == null){
+                throw new Exception("No Vault Keep By This Id");
+            }
+            return keep;
         }
     }
 }

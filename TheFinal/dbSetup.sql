@@ -66,3 +66,16 @@ a.*
 FROM vaults v
 JOIN accounts a ON a.id = v.creatorId;
 -- 
+
+-- STUB CREATE VAULT KEEP TABLE
+CREATE TABLE IF NOT EXISTS vaultkeeps(
+  id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+  creatorId VARCHAR(255) NOT NULL,
+  vaultId INT NOT NULL,
+  keepId INT NOT NULL DEFAULT 0,
+
+  FOREIGN KEY (creatorId) REFERENCES accounts(id),
+  FOREIGN KEY (vaultId) REFERENCES vaults(id)
+) default charset utf8;
+
+DROP TABLE vaultKeeps;

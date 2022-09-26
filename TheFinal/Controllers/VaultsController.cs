@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using CodeWorks.Auth0Provider;
 using Microsoft.AspNetCore.Authorization;
@@ -13,10 +14,12 @@ namespace TheFinal.Controllers
     public class VaultsController : ControllerBase
     {
         private readonly VaultsService _vaultsService;
+        private readonly VaultKeepsService _vaultKeepsService;
 
-        public VaultsController(VaultsService vaultsService)
+        public VaultsController(VaultsService vaultsService, VaultKeepsService vaultKeepsService)
         {
             _vaultsService = vaultsService;
+            _vaultKeepsService = vaultKeepsService;
         }
 
         [HttpPost]
@@ -73,6 +76,19 @@ namespace TheFinal.Controllers
                 Account user = await HttpContext.GetUserInfoAsync<Account>();
                 string message = _vaultsService.DeleteVault(id, user.Id);
                 return Ok(message);
+            }
+                catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpGet("{id}/vaultkeeps")]
+        public ActionResult<List<VaultedKeep>> GetVaultKeeps(int id){
+            try
+            {
+                List<VaultedKeep> keeps = _vaultKeepsService.GetKeepsByVault(id);
+                return Ok(keeps);
             }
                 catch (Exception e)
             {
