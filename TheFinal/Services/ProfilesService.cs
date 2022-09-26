@@ -1,3 +1,5 @@
+using System;
+using TheFinal.Models;
 using TheFinal.Repositories;
 
 namespace TheFinal.Services
@@ -9,6 +11,15 @@ namespace TheFinal.Services
         public ProfilesService(ProfilesRepository profilesRepo)
         {
             _profilesRepo = profilesRepo;
+        }
+
+        internal Profile GetUserProfile(int profileId)
+        {
+            Profile profile = _profilesRepo.GetUserProfile(profileId);
+            if(profile == null){
+                throw new Exception("No profile by that Id");
+            }
+            return profile;
         }
     }
 }

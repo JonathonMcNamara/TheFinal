@@ -1,4 +1,6 @@
+using System;
 using Microsoft.AspNetCore.Mvc;
+using TheFinal.Models;
 using TheFinal.Services;
 
 namespace TheFinal.Controllers
@@ -12,6 +14,19 @@ namespace TheFinal.Controllers
         public ProfilesController(ProfilesService profilesService)
         {
             _profilesService = profilesService;
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult<Profile> GetUserProfile(int id){
+            try
+            {
+                Profile profile = _profilesService.GetUserProfile(id);
+                return profile;
+            }
+                catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
     }
 }
