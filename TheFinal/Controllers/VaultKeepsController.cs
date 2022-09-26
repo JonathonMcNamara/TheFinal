@@ -10,11 +10,11 @@ namespace TheFinal.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class VaultKeepController : ControllerBase
+    public class VaultKeepsController : ControllerBase
     {
         private readonly VaultKeepsService _vaultKeepsService;
 
-        public VaultKeepController(VaultKeepsService vaultKeepsService)
+        public VaultKeepsController(VaultKeepsService vaultKeepsService)
         {
             _vaultKeepsService = vaultKeepsService;
         }

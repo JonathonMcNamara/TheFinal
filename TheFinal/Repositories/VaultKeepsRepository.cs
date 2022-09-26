@@ -19,9 +19,9 @@ namespace TheFinal.Repositories
         {
             string sql = @"
             INSERT INTO vaultkeeps
-            (vaultId, keepId)
+            (vaultId, keepId, creatorId)
             VALUES
-            (@vaultId, @keepId);
+            (@vaultId, @keepId, @creatorId);
             SELECT LAST_INSERT_ID();
             ";
             int id = _db.ExecuteScalar<int>(sql, newVaultKeep);

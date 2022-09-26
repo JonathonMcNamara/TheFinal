@@ -76,7 +76,7 @@ namespace TheFinal.Repositories
             newKeep.Id = id;
             return newKeep;
         }
-
+// STUB NEED TO CONNECT THE KEEP TO THE VAULT KEEP AND SET THE PARAMS FOR IT WHEN YOU GET IT SO THEY ARE DISPLAYED.
         internal VaultedKeep GetVaultKeep(int id)
         {
             string sql = @"

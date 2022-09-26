@@ -80,3 +80,9 @@ CREATE TABLE IF NOT EXISTS vaultkeeps(
 ) default charset utf8;
 
 DROP TABLE vaultkeeps;
+
+            INSERT INTO vaultkeeps
+            (vaultId, keepId, creatorId)
+            VALUES
+            (1, 1, '62f692c85d4c5d880f69ac3a');
+            SELECT LAST_INSERT_ID();
