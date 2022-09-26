@@ -58,7 +58,7 @@ namespace TheFinal.Services
                 throw new Exception("You are not allowed to delete this keep");
             }
             _keepsRepo.DeleteKeep(id);
-            return $"The Keep {keep.Name} has been deleted";
+            return $"The Keep has been deleted";
         }
         internal VaultedKeep GetVaultedKeepById(int keepId)
         {

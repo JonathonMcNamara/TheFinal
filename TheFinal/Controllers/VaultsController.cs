@@ -73,10 +73,14 @@ namespace TheFinal.Controllers
 
         [HttpDelete("{id}")]
         [Authorize]
-        public async Task<ActionResult<Vault>> DeleteVault(int id){
+        public async Task<ActionResult<string>> DeleteVault(int id){
             try
             {
                 Account user = await HttpContext.GetUserInfoAsync<Account>();
+                Vault vault = _vaultsService.GetVaultById(id);
+                if(vault.CreatorId != user.Id){
+                    throw new Exception("Unable to delete this");
+                }
                 string message = _vaultsService.DeleteVault(id, user.Id);
                 return Ok(message);
             }
