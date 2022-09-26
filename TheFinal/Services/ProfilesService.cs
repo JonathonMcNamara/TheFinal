@@ -13,7 +13,7 @@ namespace TheFinal.Services
             _profilesRepo = profilesRepo;
         }
 
-        internal Profile GetUserProfile(int profileId)
+        internal Profile GetUserProfile(string profileId)
         {
             Profile profile = _profilesRepo.GetUserProfile(profileId);
             if(profile == null){

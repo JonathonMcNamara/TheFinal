@@ -17,11 +17,11 @@ namespace TheFinal.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Profile> GetUserProfile(int id){
+        public ActionResult<Profile> GetUserProfile(string id){
             try
             {
                 Profile profile = _profilesService.GetUserProfile(id);
-                return profile;
+                return Ok(profile);
             }
                 catch (Exception e)
             {
