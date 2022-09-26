@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using Dapper;
@@ -58,6 +59,23 @@ namespace TheFinal.Repositories
             return updateData;
         }
 
+        internal List<Vault> GetVaultByAccountId(string userId)
+        {
+            string sql = @"
+            SELECT 
+            v.*,
+            a.*
+            FROM vaults v
+            JOIN accounts a ON v.creatorId = a.id
+            WHERE a.id = @userId;
+            ";
+            List<Vault> vaults = _db.Query<Vault, Account, Vault>(sql, (vault, account)=>{
+                vault.Creator = account;
+                return vault;
+            }, new{userId}).ToList();
+            return vaults;
+        }
+
         internal void DeleteVault(int id)
         {
             string sql = @"
@@ -65,5 +83,23 @@ namespace TheFinal.Repositories
             ";
             _db.Execute(sql, new{id});
         }
+
+        internal List<Vault> GetVaultsByCreatorId(string id)
+        {
+            string sql = @"
+            SELECT 
+            v.*,
+            a.*
+            FROM vaults v
+            JOIN accounts a ON v.creatorId = a.id
+            WHERE v.creatorId = @id;
+            ";
+            List<Vault> vaults = _db.Query<Vault, Profile, Vault>(sql, (vault, prof)=>{
+                vault.Creator = prof;
+                return vault;
+            },new {id}).ToList();
+            return vaults;
+        }
+
     }
 }

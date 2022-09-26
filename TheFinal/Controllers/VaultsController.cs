@@ -44,6 +44,9 @@ namespace TheFinal.Controllers
             try
             {
                 Vault vault = _vaultsService.GetVaultById(id);
+                if(vault.IsPrivate){
+                    throw new Exception("Unable to view this vault");
+                }
                 return vault;
             }
                 catch (Exception e)

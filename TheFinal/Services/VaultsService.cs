@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using TheFinal.Models;
 using TheFinal.Repositories;
 
@@ -39,6 +40,11 @@ namespace TheFinal.Services
             return _vaultsRepo.EditVault(original);
         }
 
+        internal List<Vault> GetVaultByAccount(string userId)
+        {
+            return _vaultsRepo.GetVaultByAccountId(userId);
+        }
+
         internal string DeleteVault(int id, string userId)
         {
             Vault vault = GetVaultById(id);
@@ -47,6 +53,11 @@ namespace TheFinal.Services
             }
             _vaultsRepo.DeleteVault(id);
             return $"Vault {vault.Name} has been deleted";
+        }
+
+        internal List<Vault> GetVaultsByCreatorId(string id)
+        {
+            return _vaultsRepo.GetVaultsByCreatorId(id);
         }
     }
 }

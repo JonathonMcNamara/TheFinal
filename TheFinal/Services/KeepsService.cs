@@ -46,6 +46,10 @@ namespace TheFinal.Services
             return _keepsRepo.UpdateKeep(original);
         }
 
+        internal List<Keep> GetKeepsByCreatorId(string id)
+        {
+            return _keepsRepo.GetKeepsByCreatorId(id);
+        }
 
         internal string DeleteKeep(int id, string userId)
         {
