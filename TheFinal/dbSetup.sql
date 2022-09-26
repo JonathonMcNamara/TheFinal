@@ -72,10 +72,11 @@ CREATE TABLE IF NOT EXISTS vaultkeeps(
   id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
   creatorId VARCHAR(255) NOT NULL,
   vaultId INT NOT NULL,
-  keepId INT NOT NULL DEFAULT 0,
+  keepId INT NOT NULL,
 
   FOREIGN KEY (creatorId) REFERENCES accounts(id),
-  FOREIGN KEY (vaultId) REFERENCES vaults(id)
+  FOREIGN KEY (vaultId) REFERENCES vaults(id),
+  FOREIGN KEY (keepId) REFERENCES keeps(id)
 ) default charset utf8;
 
-DROP TABLE vaultKeeps;
+DROP TABLE vaultkeeps;

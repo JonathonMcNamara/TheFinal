@@ -25,12 +25,14 @@ namespace TheFinal.Controllers
             try
             {
                 Account user = await HttpContext.GetUserInfoAsync<Account>();
+                newVaultKeep.CreatorId = user.Id;
                 VaultedKeep keep = _vaultKeepsService.Create(newVaultKeep, user.Id);
+                keep.Creator = user;
                 return Ok(keep);
             }
-            catch (Exception e)
+                catch (Exception e)
             {
-            return BadRequest(e.Message);
+                return BadRequest(e.Message);
             }
         }
     }
