@@ -11,6 +11,14 @@
           <div class="col-6">
             <h1>{{activeKeep?.name}}</h1>
             <p>{{activeKeep?.description}}</p>
+            <div class="row">
+              <div class="col-10">
+                {{activeKeep?.creator.name}}
+              </div>
+              <div class="col-1">
+                <img class="img" :src="activeKeep?.creator.picture" alt="">
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -32,4 +40,9 @@ setup() {
 }
 </script>
 <style>
+.img{
+  border-radius: 50%;
+  height: 20px;
+  width: 20px;
+}
 </style>
