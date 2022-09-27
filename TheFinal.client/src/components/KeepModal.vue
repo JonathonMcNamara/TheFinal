@@ -16,7 +16,9 @@
                 {{activeKeep?.creator.name}}
               </div>
               <div class="col-1">
-                <img class="img" :src="activeKeep?.creator.picture" alt="">
+              <router-link v-if="activeKeep" :to="{name: 'Profile' , params: {profileId: activeKeep?.creatorId}}">
+                <img class="img" data-bs-dismiss="modal" :src="activeKeep?.creator.picture" alt="">
+              </router-link>
               </div>
             </div>
           </div>
