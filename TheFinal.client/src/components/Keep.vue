@@ -1,9 +1,8 @@
 <template>
 
-
 <div class="my-2 row">
   <div class="col-12">
-    <img class="img-fluid img1" :src="keep?.img" alt="">
+    <img @click="setActiveKeep()" class="img-fluid img1" :src="keep?.img" alt="">
     <p>
       {{keep.name}}
       <router-link :to="{name: 'Profile' , params: {profileId: keep?.creatorId}}">
@@ -12,6 +11,7 @@
     </p>
   </div>
 </div>
+<KeepModal/>
 
 
 
@@ -19,16 +19,32 @@
 
 </template>
 <script>
+import { computed } from '@vue/reactivity';
+import { Modal } from 'bootstrap';
+import { AppState } from '../AppState.js';
+import { keepsService } from '../services/KeepsService.js';
+import Pop from '../utils/Pop.js';
+import KeepModal from './KeepModal.vue';
+
 
 
 export default {
-props: {keep: {type: Object, required: true}},
-setup() {
-
-
-
-  return {}
-}
+    props: { keep: { type: Object, required: true } },
+    setup(props) {
+        return {
+            activeKeep: computed(() => AppState.activeKeep),
+            async setActiveKeep(keepId) {
+                try {
+                    Modal.getOrCreateInstance(document.getElementById("keepModal")).toggle();
+                    await keepsService.setActiveKeep(props.keep.id);
+                }
+                catch (error) {
+                    Pop.error(error);
+                }
+            }
+        };
+    },
+    components: { KeepModal }
 }
 </script>
 <style>

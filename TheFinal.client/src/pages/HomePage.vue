@@ -33,7 +33,7 @@ export default {
             getAllKeeps();
         });
         return {
-            keeps: computed(() => AppState.keeps)
+            keeps: computed(() => AppState.keeps),
         };
     },
     components: { Keep }
