@@ -1,9 +1,9 @@
 <template>
 
 <main class="container">
-        <div class="masonry" v-for="k in keeps" :key="k.id">
+        <figure class="masonry" v-for="k in keeps" :key="k.id">
             <Keep :keep="k"/>
-        </div>
+        </figure>
 </main>
 
 
@@ -42,7 +42,12 @@ export default {
 
 <style scoped lang="scss">
 
-.img1 {
+body {
+  background-color: #000;
+  font: 1.1em Arial, Helvetica, sans-serif;
+}
+
+img {
   max-width: 100%;
   display: block;
 }
@@ -55,7 +60,7 @@ figure {
   break-inside: avoid;
 }
 
-figure > .img1 {
+figure>img {
   grid-row: 1 / -1;
   grid-column: 1;
 }
@@ -68,7 +73,7 @@ figure a {
 figcaption {
   grid-row: 2;
   grid-column: 1;
-  background-color: rgba(255,255,255,.5);
+  background-color: rgba(255, 255, 255, .5);
   padding: .2em .5em;
   justify-self: start;
 }

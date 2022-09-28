@@ -3,14 +3,18 @@
 <div class="modal fade" id="keepModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-body">
+      <div class="modal-body p-2">
         <div class="row">
           <div class="col-6">
               <img class="img-fluid" :src="activeKeep?.img" alt="">
           </div>
           <div class="col-6">
-            <h1>{{activeKeep?.name}}</h1>
-            <p>{{activeKeep?.description}}</p>
+            <div class="row">
+              <div class="col-12">
+                <h1>{{activeKeep?.name}}</h1>
+                <h4>{{activeKeep?.description}}</h4>
+              </div>
+            </div>
             <div class="row">
               <div class="col-10">
                 {{activeKeep?.creator.name}}
@@ -36,15 +40,22 @@ import { AppState } from '../AppState.js';
 export default {
 setup() {
   return {
-    activeKeep: computed(()=> AppState.activeKeep)
+    activeKeep: computed(()=> AppState.activeKeep),
   }
 }
 }
 </script>
 <style>
+
+
 .img{
   border-radius: 50%;
   height: 20px;
   width: 20px;
 }
+
+.bottom{
+  margin-top: 0;
+}
+
 </style>
