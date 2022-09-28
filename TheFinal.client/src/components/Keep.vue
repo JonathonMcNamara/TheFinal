@@ -33,10 +33,10 @@ export default {
     setup(props) {
         return {
             activeKeep: computed(() => AppState.activeKeep),
-            async setActiveKeep(keepId) {
+            async setActiveKeep() {
                 try {
                     Modal.getOrCreateInstance(document.getElementById("keepModal")).toggle();
-                    await keepsService.setActiveKeep(props.keep.id);
+                    await keepsService.getKeepById(props.keep.id);
                 }
                 catch (error) {
                     Pop.error(error);

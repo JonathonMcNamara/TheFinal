@@ -55,7 +55,7 @@ namespace TheFinal.Controllers
             try
             {
                 Keep keep = _keepsService.GetKeepById(id);
-                return keep;
+                return Ok(keep);
             }
                 catch (Exception e)
             {

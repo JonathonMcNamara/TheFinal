@@ -14,14 +14,8 @@ async GetAllKeeps(){
 async getKeepById(id){
     const res = await api.get("api/keeps/"+ id)
     console.log("Getting Single Keep", res.data)
-    return res.data
-}
-
-async setActiveKeep(id){
-    const res = await this.getKeepById(id)
-    console.log("Setting active keep", res)
-    AppState.activeKeep = res
-    logger.log("Active keep in App State", AppState.activeKeep)
+    AppState.activeKeep = res.data
+    logger.log(AppState.activeKeep)
 }
 
 }

@@ -5,21 +5,13 @@
         Keeper
       </div>
     </router-link>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarText"
-      aria-controls="navbarText"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon" />
-    </button>
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav me-auto">
       </ul>
       <!-- LOGIN COMPONENT HERE -->
+      <div class="d-flex flex-column align-items-center mx-5">
+        My Profile
+      </div>
       <Login />
     </div>
   </nav>

@@ -10,6 +10,15 @@
           </div>
           <div class="col-6">
             <div class="row">
+              <div class="col-3 offset-1">
+                <span class="mdi mdi-eye">{{activeKeep?.views}}</span>
+              </div>
+              <div class="col-3">
+                <span class="mdi mdi-kickstarter">{{activeKeep?.kept}}</span>
+              </div>
+              <div class="col-3">
+                <span class="mdi mdi-share-variant">0</span>
+              </div>
               <div class="col-12">
                 <h1>{{activeKeep?.name}}</h1>
                 <h4>{{activeKeep?.description}}</h4>

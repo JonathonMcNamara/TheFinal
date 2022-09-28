@@ -25,7 +25,8 @@ namespace TheFinal.Services
             if(keep == null){
                 throw new Exception("No keep by that id");
             }
-            keep.Views ++;
+            keep.Views++;
+            _keepsRepo.UpdateKeep(keep);
             return keep;
         }
         
