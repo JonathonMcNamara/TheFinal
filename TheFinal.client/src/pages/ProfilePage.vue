@@ -1,6 +1,6 @@
 <template>
 
-<div class="profile" v-if="profile">
+<div class="profile container-fluid" v-if="profile">
   <div class="row my-3">
     <div class="col-1">
       <img class="img-fluid" :src="profile.picture" alt="">
@@ -18,7 +18,8 @@
         </div>
       </div>
     </div>
-</div>
+  </div>
+  <div class="row"></div>
 
 
 
