@@ -18,6 +18,13 @@ async getKeepById(id){
     logger.log(AppState.activeKeep)
 }
 
+async getProfileKeeps(id){
+    const res = await api.get(`api/profiles/${id}/keeps`)
+    logger.log("Profile Keeps", res.data)
+    AppState.profileKeeps = res.data
+    logger.log("Profile Keeps" ,AppState.profileKeeps)
+}
+
 }
 
 
