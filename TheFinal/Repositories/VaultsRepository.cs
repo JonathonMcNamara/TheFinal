@@ -84,7 +84,7 @@ namespace TheFinal.Repositories
             _db.Execute(sql, new{id});
         }
 
-        internal List<Vault> GetVaultsByCreatorId(string id)
+        internal List<Vault> GetVaultsByCreatorId(string id, string userId)
         {
             string sql = @"
             SELECT 
@@ -92,7 +92,8 @@ namespace TheFinal.Repositories
             a.*
             FROM vaults v
             JOIN accounts a ON v.creatorId = a.id
-            WHERE v.creatorId = @id;
+            WHERE v.creatorId = @id
+            ORDER BY v.isPrivate DESC;
             ";
             List<Vault> vaults = _db.Query<Vault, Profile, Vault>(sql, (vault, prof)=>{
                 vault.Creator = prof;

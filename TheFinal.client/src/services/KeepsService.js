@@ -4,6 +4,13 @@ import { api } from "./AxiosService.js"
 
 class KeepsService{
 
+async createKeep(keepData){
+    const res = await api.post("api/keeps", keepData)
+    logger.log("Creating Keep",res.data)
+    AppState.keeps.unshift(res.data)
+}
+
+
 async GetAllKeeps(){
     const res = await api.get("api/keeps")
     console.log("Getting keeps", res.data)
@@ -23,6 +30,12 @@ async getProfileKeeps(id){
     logger.log("Profile Keeps", res.data)
     AppState.profileKeeps = res.data
     logger.log("Profile Keeps" ,AppState.profileKeeps)
+}
+
+async deleteKeep(id){
+    const res = await api.delete("api/keeps/"+id)
+    logger.log("Deleting vault", res.data)
+    AppState.keeps = AppState.keeps.filter(k => k.id != id)
 }
 
 }

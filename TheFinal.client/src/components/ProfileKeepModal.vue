@@ -1,6 +1,7 @@
 <template>
 
-<div class="modal fade" id="keepModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+<div class="modal fade" id="profKeepModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-body p-2">
@@ -29,13 +30,13 @@
             <div class="row">
               <div class="col-12">
                 <div class="col-3 bottom2">
-                  <select v-if="activeProfile" class="form-select" aria-label="Default select example">
+                  <select class="form-select" aria-label="Default select example">
                     <option selected>Add To Vault</option>
                     <option v-for="v in vaults" :key="v.id">{{v?.name}}</option>
                     </select>
                 </div>
                 <div class="col-3 bottom">
-                  <i v-if="activeKeep?.creatorId == activeProfile" @click="deleteKeep()" class="btn mdi mdi-delete-forever"></i>
+                  <i v-if="activeKeep?.creatorId == activeProfile.id" @click="deleteKeep()" class="mdi mdi-delete-forever btn"></i>
                 </div>
                 <div class="col-3 right px-1 text-end">
                   {{activeKeep?.creator.name}}
@@ -52,6 +53,19 @@
   </div>
 </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 </template>
 <script>
 import { computed } from '@vue/reactivity';
@@ -63,8 +77,8 @@ export default {
 setup() {
   return {
     activeKeep: computed(()=> AppState.activeKeep),
-    activeProfile: computed(()=> AppState.account.id),
     vaults: computed(()=> AppState.vaults),
+    activeProfile: computed(()=> AppState.account),
     async deleteKeep(){
       try {
       const yes = await Pop.confirm("Delete keep?")
@@ -80,40 +94,4 @@ setup() {
 }
 </script>
 <style>
-
-.delete{
-  height: 40px;
-}
-
-.modal-body{
-  position: relative;
-}
-
-.bottom2{
-  position: absolute;
-  bottom: 8px;
-}
-
-
-.bottom {
-  position: absolute;
-  bottom: 8px;
-  right: -40px;
-}
-
-.right{
-  position: absolute;
-  bottom: 8px;
-  right: 0px;
-}
-
-
-
-.img{
-  border-radius: 50%;
-  height: 20px;
-  width: 20px;
-}
-
-
 </style>

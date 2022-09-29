@@ -55,9 +55,11 @@ namespace TheFinal.Services
             return $"Vault {vault.Name} has been deleted";
         }
 
-        internal List<Vault> GetVaultsByCreatorId(string id)
+        internal List<Vault> GetVaultsByCreatorId(string id, string userId)
         {
-            return _vaultsRepo.GetVaultsByCreatorId(id);
+            List<Vault> vaults = _vaultsRepo.GetVaultsByCreatorId(id, userId);
+            vaults = vaults.FindAll(v=> v.IsPrivate == false || v.CreatorId == userId);
+            return vaults;
         }
     }
 }

@@ -9,18 +9,33 @@
       <ul class="navbar-nav me-auto">
       </ul>
       <!-- LOGIN COMPONENT HERE -->
-      <div class="d-flex flex-column align-items-center mx-5">
-        My Profile
+        <div class="d-flex flex-column align-items-center mx-5">
+          <button class="btn bg-dark text-white" v-if="account" @click="myProfile()">My Profile</button>
+        </div>
       </div>
       <Login />
-    </div>
   </nav>
 </template>
 
 <script>
+import { computed } from '@vue/reactivity';
+import { AppState } from '../AppState.js';
+import { router } from '../router.js';
+import Pop from '../utils/Pop.js';
+
 export default {
   setup() {
-    return {};
+    return {
+      account: computed(()=> AppState.account),
+      async myProfile(){
+        try {
+        router.push({name: 'Profile', params: {profileId: AppState.account.id}})
+        } catch (error) {
+        router.push({name: 'Home'})
+        Pop.error(error)
+        }
+      }
+    };
   },
 };
 </script>

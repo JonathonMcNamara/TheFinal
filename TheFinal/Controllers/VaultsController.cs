@@ -40,11 +40,12 @@ namespace TheFinal.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Vault> GetVaultById(int id){
+        public async Task<ActionResult<Vault>> GetVaultById(int id){
             try
             {
+                Account user = await HttpContext.GetUserInfoAsync<Account>();
                 Vault vault = _vaultsService.GetVaultById(id);
-                if(vault.IsPrivate){
+                if(vault.IsPrivate && vault.CreatorId != user.Id){
                     throw new Exception("Unable to view this vault");
                 }
                 return vault;

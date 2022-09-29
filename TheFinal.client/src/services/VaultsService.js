@@ -12,6 +12,25 @@ async getProfileVaults(id){
     logger.log("Profile vaults", AppState.vaults)
 }
 
+async createVault(vaultData){
+    const res = await api.post("api/vaults", vaultData)
+    logger.log(res.data)
+    AppState.vaults.unshift(res.data)
+}
+
+async getVaultById(id){
+    const res = await api.get("api/vaults/"+id)
+    logger.log(res.data)
+    AppState.activeVault = res.data
+    logger.log(AppState.activeVault)
+}
+
+async deleteVault(id){
+    const res = await api.delete("api/vaults/"+id)
+    logger.log(res.data)
+    AppState.vaults = AppState.vaults.filter(v => v.id != id)
+}
+
 
 
 

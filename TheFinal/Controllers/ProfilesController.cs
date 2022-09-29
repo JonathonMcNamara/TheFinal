@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using CodeWorks.Auth0Provider;
 using Microsoft.AspNetCore.Mvc;
 using TheFinal.Models;
 using TheFinal.Services;
@@ -48,10 +50,11 @@ namespace TheFinal.Controllers
         }
 
         [HttpGet("{id}/vaults")]
-        public ActionResult<List<Vault>> GetUserVaults(string id){
+        public async Task<ActionResult<List<Vault>>> GetUserVaults(string id){
             try
             {
-                List<Vault> vaults = _vaultsService.GetVaultsByCreatorId(id);
+                Account user = await HttpContext.GetUserInfoAsync<Account>();
+                List<Vault> vaults = _vaultsService.GetVaultsByCreatorId(id, user?.Id);
                 return Ok(vaults);
             }
                 catch (Exception e)
