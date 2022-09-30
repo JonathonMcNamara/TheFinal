@@ -1,13 +1,16 @@
 <template>
 
-<h1>{{activeVault?.name}} <button @click="deleteVault()" v-if="activeVault?.creatorId == profile.id" class="btn">Delete Vault</button> </h1>
-<h1>Vault Keeps: {{vaultKeeps.length}}</h1>
 
-<div class="row">
-  <div class="col-2" v-for="v in vaultKeeps" :key="v.id">
-    <VaultKeep :vaultKeep="v"/>
-  </div>
-</div>
+    <h1>{{activeVault?.name}} <button @click="deleteVault()" v-if="activeVault?.creatorId == profile.id" class="btn">Delete Vault</button> </h1>
+    <h1>Vault Keeps: {{vaultKeeps.length}}</h1>
+    
+    <div class="row">
+      <div class="col-2" v-for="v in vaultKeeps" :key="v.id">
+        <VaultKeep :vaultKeep="v"/>
+      </div>
+    </div>
+
+
 
 
 
@@ -33,7 +36,7 @@ export default {
                 }
             }
             catch (error) {
-                router.push({ name: "Home" });
+                // router.push({ name: "Home" });
                 Pop.error("Unable to view page", error);
             }
         }
