@@ -57,7 +57,8 @@ namespace TheFinal.Repositories
             name = @name,
             description = @description,
             img = @img,
-            views = @views
+            views = @views,
+            kept = @kept
             WHERE id = @id;
             ";
             _db.Execute(sql, updateData);

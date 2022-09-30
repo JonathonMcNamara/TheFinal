@@ -10,23 +10,24 @@ namespace TheFinal.Services
         private readonly VaultKeepsRepository _vaultKeepsRepo;
         private readonly VaultsService _vaultsService;
         private readonly KeepsService _keepsService;
+        private readonly KeepsRepository _keepsRepo;
 
-        public VaultKeepsService(VaultKeepsRepository vaultKeepsRepo, VaultsService vaultsService, KeepsService keepsService)
+        public VaultKeepsService(VaultKeepsRepository vaultKeepsRepo, VaultsService vaultsService, KeepsService keepsService, KeepsRepository keepsRepo)
         {
             _vaultKeepsRepo = vaultKeepsRepo;
             _vaultsService = vaultsService;
             _keepsService = keepsService;
+            _keepsRepo = keepsRepo;
         }
 
-
-
-        internal List<VaultedKeep> GetKeepsByVault(string userId, int vaultId)
+        internal List<VaultedKeep> GetKeepsByVault(string userId, int id)
         {
-            Vault vault = _vaultsService.GetVaultById(vaultId);
-            if(vault.IsPrivate == true && vault.CreatorId != userId){
-                throw new Exception("Unable to view these vault keeps");
+            Vault vault = _vaultsService.GetVaultById(id);
+            if(vault.IsPrivate && vault.CreatorId != userId){
+                throw new Exception("Unable to access these vault keeps");
             }
-            return _vaultKeepsRepo.GetVaultKeepsByVaultId(vault.Id);
+            List<VaultedKeep> vaultkeeps = _vaultKeepsRepo.GetVaultKeepsByVaultId(vault.Id);
+            return vaultkeeps;
         }
 
         internal VaultKeep Create(VaultKeep vaultKeep, Account user)
@@ -36,7 +37,8 @@ namespace TheFinal.Services
             if(vault.CreatorId != user.Id){
                 throw new Exception("Unable to add vaultkeeps to this vault");
             }
-            keep.Kept ++;
+            keep.Kept++;
+            _keepsRepo.UpdateKeep(keep);
             return _vaultKeepsRepo.Create(vaultKeep);
         }
 
@@ -46,6 +48,8 @@ namespace TheFinal.Services
             if(vaultedKeep.CreatorId != userId){
                 throw new Exception("You are unable to delete this");
             }
+            vaultedKeep.Kept--;
+            _keepsRepo.UpdateKeep(vaultedKeep);
             _vaultKeepsRepo.DeleteVaultKeep(id);
             return "VaultKeep removed";
         }

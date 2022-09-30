@@ -38,10 +38,10 @@
                   <i v-if="activeKeep?.creatorId == activeProfile" @click="deleteKeep()" class="btn mdi mdi-delete-forever"></i>
                 </div>
                 <div class="col-3 right px-1 text-end">
-                  {{activeKeep?.creator.name}}
                   <router-link v-if="activeKeep" :to="{name: 'Profile' , params: {profileId: activeKeep?.creatorId}}">
                   <img class="img img-fluid" data-bs-dismiss="modal" :src="activeKeep?.creator.picture" alt="">
                   </router-link>
+                  {{activeKeep?.creator.name}}
                 </div>
               </div>
             </div>

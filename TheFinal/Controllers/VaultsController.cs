@@ -63,7 +63,7 @@ namespace TheFinal.Controllers
             {
                 Account user = await HttpContext.GetUserInfoAsync<Account>();
                 updateVault.Id = id;
-                Vault vault = _vaultsService.EditVault(updateVault, user.Id);
+                Vault vault = _vaultsService.EditVault(updateVault, user?.Id);
                 return Ok(vault);
             }
                 catch (Exception e)
@@ -92,11 +92,11 @@ namespace TheFinal.Controllers
         }
 
         [HttpGet("{id}/keeps")]
-        public async  Task<ActionResult<List<VaultedKeep>>> GetVaultKeeps(int id){
+        public async Task<ActionResult<List<VaultedKeep>>> GetVaultKeeps(int id){
             try
             {
-                Account user = await HttpContext.GetUserInfoAsync<Account>();
-                List<VaultedKeep> vaultKeeps = _vaultKeepsService.GetKeepsByVault(user.Id, id);
+                Profile user = await HttpContext.GetUserInfoAsync<Profile>();
+                List<VaultedKeep> vaultKeeps = _vaultKeepsService.GetKeepsByVault(user?.Id, id);
                 return Ok(vaultKeeps);
             }
                 catch (Exception e)

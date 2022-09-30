@@ -32,10 +32,10 @@
                       <button @click="deleteVaultKeep()" class="btn">Delete From Vault</button>
                     </div>
                     <div class="col-3 right px-1 text-end">
-                      {{activeVaultKeep?.creator.name}}
                       <router-link v-if="activeVaultKeep" :to="{name: 'Profile' , params: {profileId: activeVaultKeep?.creatorId}}">
                       <img class="img img-fluid" data-bs-dismiss="modal" :src="activeVaultKeep?.creator.picture" alt="">
                       </router-link>
+                      {{activeVaultKeep?.creator.name}}
                     </div>
                   </div>
                 </div>
