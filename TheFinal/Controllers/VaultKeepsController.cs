@@ -13,27 +13,75 @@ namespace TheFinal.Controllers
     public class VaultKeepsController : ControllerBase
     {
         private readonly VaultKeepsService _vaultKeepsService;
+        private readonly KeepsService _keepsService;
 
-        public VaultKeepsController(VaultKeepsService vaultKeepsService)
+        public VaultKeepsController(VaultKeepsService vaultKeepsService, KeepsService keepsService)
         {
             _vaultKeepsService = vaultKeepsService;
+            _keepsService = keepsService;
         }
 
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult<VaultedKeep>> Create([FromBody] VaultKeep newVaultKeep){
+
+        public async Task<ActionResult<VaultedKeep>> Create([FromBody] VaultKeep vaultKeep){
             try
             {
                 Account user = await HttpContext.GetUserInfoAsync<Account>();
-                newVaultKeep.CreatorId = user.Id;
-                VaultedKeep keep = _vaultKeepsService.Create(newVaultKeep, user.Id);
-                keep.Creator = user;
-                return Ok(keep);
+                vaultKeep.CreatorId = user.Id; // what if the user is null here???
+                VaultKeep newVaultKeep = _vaultKeepsService.Create(vaultKeep, user);
+                VaultedKeep keep = _keepsService.GetVaultedKeepById(newVaultKeep.KeepId);
+                newVaultKeep.VaultId = vaultKeep.VaultId;
+                newVaultKeep.Id = vaultKeep.Id;
+                return Ok(vaultKeep);
             }
                 catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<VaultedKeep>> GetVaultKeepByVaultKeepId(int id){
+            try
+            {
+                Account user = await HttpContext.GetUserInfoAsync<Account>();
+                VaultedKeep vaultedKeep = _vaultKeepsService.GetVaultKeepByVaultKeepId(id);
+                return Ok(vaultedKeep);
+            }
+                catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+
+
+
+
+
+
+        [HttpDelete("{id}")]
+        [Authorize]
+        public async Task<ActionResult<string>> DeleteVaultKeep(int id){
+            try
+            {
+                Account user = await HttpContext.GetUserInfoAsync<Account>();
+                VaultedKeep vaultedKeep = _vaultKeepsService.GetVaultKeepByVaultKeepId(id);
+                if(vaultedKeep.CreatorId != user.Id){
+                    throw new Exception("Unable to delete this");
+                }
+                string message = _vaultKeepsService.DeleteVaultKeep(id, user.Id);
+                return Ok(message);
+            }
+                catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+
+
     }
+    
 }

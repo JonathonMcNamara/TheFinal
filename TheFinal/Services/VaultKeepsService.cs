@@ -18,21 +18,45 @@ namespace TheFinal.Services
             _keepsService = keepsService;
         }
 
-        internal VaultedKeep Create(VaultKeep newVaultKeep, string userId)
+
+
+        internal List<VaultedKeep> GetKeepsByVault(string userId, int vaultId)
         {
-            Vault vault = _vaultsService.GetVaultById(newVaultKeep.VaultId);
-            if(vault.CreatorId != userId){
-                throw new Exception("You are not the owner of this vault");
+            Vault vault = _vaultsService.GetVaultById(vaultId);
+            if(vault.IsPrivate == true && vault.CreatorId != userId){
+                throw new Exception("Unable to view these vault keeps");
             }
-            int id = _vaultKeepsRepo.Create(newVaultKeep);
-            VaultedKeep vaultKeep = _keepsService.GetVaultedKeepById(newVaultKeep.KeepId);
-            vaultKeep.VaultKeepId = id;
-            return vaultKeep; 
+            return _vaultKeepsRepo.GetVaultKeepsByVaultId(vault.Id);
         }
 
-        internal List<VaultedKeep> GetKeepsByVault(int vaultId)
+        internal VaultKeep Create(VaultKeep vaultKeep, Account user)
         {
-            return _vaultKeepsRepo.GetKeepsByVaultId(vaultId);
+            Vault vault = _vaultsService.GetVaultById(vaultKeep.VaultId);
+            VaultedKeep keep = _keepsService.GetVaultedKeepById(vaultKeep.KeepId);
+            if(vault.CreatorId != user.Id){
+                throw new Exception("Unable to add vaultkeeps to this vault");
+            }
+            keep.Kept ++;
+            return _vaultKeepsRepo.Create(vaultKeep);
+        }
+
+        internal string DeleteVaultKeep(int id, string userId)
+        {
+            VaultedKeep vaultedKeep = GetVaultKeepByVaultKeepId(id);
+            if(vaultedKeep.CreatorId != userId){
+                throw new Exception("You are unable to delete this");
+            }
+            _vaultKeepsRepo.DeleteVaultKeep(id);
+            return "VaultKeep removed";
+        }
+
+        internal VaultedKeep GetVaultKeepByVaultKeepId(int id)
+        {
+            VaultedKeep vaultedKeep = _vaultKeepsRepo.GetVaultKeepsByVaultKeepId(id);
+            if(vaultedKeep == null){
+                throw new Exception("Unable to delete this");
+            }
+            return vaultedKeep;
         }
     }
 }

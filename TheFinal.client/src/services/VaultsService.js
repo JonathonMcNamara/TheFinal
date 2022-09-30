@@ -31,6 +31,27 @@ async deleteVault(id){
     AppState.vaults = AppState.vaults.filter(v => v.id != id)
 }
 
+async getVaultKeeps(vaultId){
+    const res = await api.get(`api/vaults/${vaultId}/keeps`)
+    logger.log("VaultKeeps",res.data)
+    AppState.vaultKeeps = res.data
+    logger.log("AppState Vault keeps", AppState.vaultKeeps)
+}
+
+async getVaultKeepById(id){
+    const res = AppState.vaultKeeps.find(v=> v.id = id)
+    logger.log("Getting vault keep", res)
+    AppState.activeVaultKeep = res
+    logger.log("AppState ActiveVaultKeep", res)
+}
+
+async deleteVaultKeep(id){
+    const res = await api.delete(`api/vaultkeeps/`+ id)
+    logger.log(res.data)
+    AppState.vaultKeeps = AppState.vaultKeeps.filter(v => v.id != id)
+    
+}
+
 
 
 

@@ -74,9 +74,9 @@ CREATE TABLE IF NOT EXISTS vaultkeeps(
   vaultId INT NOT NULL,
   keepId INT NOT NULL,
 
-  FOREIGN KEY (creatorId) REFERENCES accounts(id),
-  FOREIGN KEY (vaultId) REFERENCES vaults(id),
-  FOREIGN KEY (keepId) REFERENCES keeps(id)
+  FOREIGN KEY (creatorId) REFERENCES accounts(id) ON DELETE CASCADE,
+  FOREIGN KEY (vaultId) REFERENCES vaults(id) ON DELETE CASCADE,
+  FOREIGN KEY (keepId) REFERENCES keeps(id) ON DELETE CASCADE
 ) default charset utf8;
 
 DROP TABLE vaultkeeps;
@@ -86,3 +86,17 @@ DROP TABLE vaultkeeps;
             VALUES
             (1, 1, '62f692c85d4c5d880f69ac3a');
             SELECT LAST_INSERT_ID();
+
+
+
+
+
+
+SELECT 
+vk.*,
+k.*,
+a.*
+FROM vaultkeeps vk
+JOIN keeps k ON vk.keepId = k.id
+JOIN accounts a ON k.creatorId = a.id
+WHERE vk.vaultId = 155

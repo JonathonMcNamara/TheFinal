@@ -29,9 +29,9 @@
             <div class="row">
               <div class="col-12">
                 <div class="col-3 bottom2">
-                  <select v-if="activeProfile" class="form-select" aria-label="Default select example">
+                  <select @change="setActiveVault($event.target.value)" v-if="activeProfile" class="form-select" aria-label="Default select example">
                     <option selected>Add To Vault</option>
-                    <option v-for="v in vaults" :key="v.id">{{v?.name}}</option>
+                    <option v-for="v in vaults" :key="v.id" :value="v.id">{{v?.name}}</option>
                     </select>
                 </div>
                 <div class="col-3 bottom">
@@ -54,16 +54,18 @@
 
 </template>
 <script>
-import { computed } from '@vue/reactivity';
+import { computed, ref } from '@vue/reactivity';
 import { AppState } from '../AppState.js';
 import { keepsService } from '../services/KeepsService.js';
 import Pop from '../utils/Pop.js';
 
 export default {
-setup() {
+  setup() {
+  const editable = ref({})
   return {
     activeKeep: computed(()=> AppState.activeKeep),
     activeProfile: computed(()=> AppState.account.id),
+    activeVault: computed(()=> AppState.activeVault),
     vaults: computed(()=> AppState.vaults),
     async deleteKeep(){
       try {
@@ -74,6 +76,16 @@ setup() {
       } catch (error) {
       Pop.error(error)
       }
+    },
+    async setActiveVault(id){
+    try {
+    const yes = await Pop.confirm("Add to vault?")
+    if(!yes) {return}
+    await keepsService.createVaultKeep (id, AppState.activeKeep)
+    Pop.toast("Added to vault!")
+    } catch (error) {
+    Pop.error(error)
+    }
     }
   }
 }

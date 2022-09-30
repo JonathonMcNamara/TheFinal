@@ -48,7 +48,7 @@ namespace TheFinal.Controllers
                 if(vault.IsPrivate && vault.CreatorId != user.Id){
                     throw new Exception("Unable to view this vault");
                 }
-                return vault;
+                return Ok(vault);
             }
                 catch (Exception e)
             {
@@ -91,17 +91,19 @@ namespace TheFinal.Controllers
             }
         }
 
-        [HttpGet("{id}/vaultkeeps")]
-        public ActionResult<List<VaultedKeep>> GetVaultKeeps(int id){
+        [HttpGet("{id}/keeps")]
+        public async  Task<ActionResult<List<VaultedKeep>>> GetVaultKeeps(int id){
             try
             {
-                List<VaultedKeep> keeps = _vaultKeepsService.GetKeepsByVault(id);
-                return Ok(keeps);
+                Account user = await HttpContext.GetUserInfoAsync<Account>();
+                List<VaultedKeep> vaultKeeps = _vaultKeepsService.GetKeepsByVault(user.Id, id);
+                return Ok(vaultKeeps);
             }
                 catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
         }
+
     }
 }
