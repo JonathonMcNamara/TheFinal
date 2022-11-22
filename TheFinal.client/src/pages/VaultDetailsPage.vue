@@ -1,6 +1,5 @@
 <template>
 
-
     <h1>{{activeVault?.name}} <button @click="deleteVault()" v-if="activeVault?.creatorId == profile.id" class="btn">Delete Vault</button> </h1>
     <h1>Vault Keeps: {{vaultKeeps.length}}</h1>
     
@@ -36,7 +35,7 @@ export default {
                 }
             }
             catch (error) {
-                // router.push({ name: "Home" });
+                router.push({ name: "Home" });
                 Pop.error("Unable to view page", error);
             }
         }
@@ -48,7 +47,7 @@ export default {
                 Pop.error(error);
             }
         }
-        onMounted(() => {
+        onMounted(async() => {
             getVaultById();
             getVaultKeeps();
         });

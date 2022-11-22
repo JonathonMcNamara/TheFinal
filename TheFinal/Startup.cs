@@ -43,6 +43,7 @@ namespace TheFinal
             services.AddTransient<VaultKeepsService>();
             services.AddTransient<ProfilesRepository>();
             services.AddTransient<ProfilesService>();
+            CodeWorks.Auth0Provider.Auth0ProviderExtension.TTL = 600; 
         }
 
         private void ConfigureCors(IServiceCollection services)

@@ -96,7 +96,7 @@ export default {
                 Pop.error(error);
             }
         }
-        onMounted(() => {
+        onMounted(async() => {
             getProfileById();
             getProfileVaults();
             getProfileKeeps();
